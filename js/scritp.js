@@ -20,7 +20,7 @@ function secondsToMinutesSeconds(seconds) {
 
 async function getSongs(folder) {
   currFolder = folder;
-  let a = await fetch(`http://192.168.1.7:3000/${currFolder}/`);
+  let a = await fetch(`http://127.0.0.1:3000/${currFolder}/`);
   let response = await a.text();
   let div = document.createElement("div");
   div.innerHTML = response;
@@ -42,7 +42,6 @@ async function getSongs(folder) {
         <img class="invert" src="img/music.svg" alt="" />
         <div class="info">
           <div>${song}</div>
-          <div>Vaibhav</div>
         </div>
         <div class="playNow">
           <span>Play Now</span>
@@ -74,7 +73,7 @@ const playMusic = (track, pause = false) => {
 };
 
 async function displayAlbums() {
-  let a = await fetch(`http://192.168.1.7:3000/songs/`);
+  let a = await fetch(`http://127.0.0.1:3000/songs/`);
   let response = await a.text();
   let div = document.createElement("div");
   div.innerHTML = response;
@@ -87,7 +86,7 @@ async function displayAlbums() {
       let folder = e.href.split("/").slice(-2)[0];
 
       // Get the metadata of the folder
-      let a = await fetch(`http://192.168.1.7:3000/songs/${folder}/info.json`);
+      let a = await fetch(`http://127.0.0.1:3000/songs/${folder}/info.json`);
       let response = await a.json();
       cardContainer.innerHTML += `<div data-folder="${folder}" class="card">
       <div class="play">
@@ -127,7 +126,7 @@ async function displayAlbums() {
 
 async function main() {
   // Get the list of all the songs
-  await getSongs("songs/ncs");
+  await getSongs("songs/Angry_(mood)");
   playMusic(songs[0], true);
 
   // Display all the albums on the page
