@@ -20,7 +20,9 @@ function secondsToMinutesSeconds(seconds) {
 
 async function getSongs(folder) {
   currFolder = folder;
-  let a = await fetch(`https://spotify-clone-seven-sage.vercel.app/${currFolder}/`);
+  let a = await fetch(
+    `https://spotify-clone-seven-sage.vercel.app/${currFolder}/`
+  );
   let response = await a.text();
   let div = document.createElement("div");
   div.innerHTML = response;
@@ -86,7 +88,9 @@ async function displayAlbums() {
       let folder = e.href.split("/").slice(-1)[0];
 
       // Get the metadata of the folder
-      let a = await fetch(`https://spotify-clone-seven-sage.vercel.app/songs/${folder}/info.json`);
+      let a = await fetch(
+        `https://spotify-clone-seven-sage.vercel.app/songs/${folder}/info.json`
+      );
       let response = await a.json();
       cardContainer.innerHTML += `<div data-folder="${folder}" class="card">
       <div class="play">
@@ -211,6 +215,17 @@ async function main() {
         .getElementsByTagName("input")[0].value = 50;
     }
   });
+
+  // Play next song after one song ends
+
+  setInterval(() => {
+    if (currentSong.duration == currentSong.currentTime) {
+      let index = songs.indexOf(currentSong.src.split("/").slice(-1)[0]);
+      if (index + 1 < songs.length) {
+        playMusic(songs[index + 1]);
+      }
+    }
+  }, 2000);
 }
 
 main();
